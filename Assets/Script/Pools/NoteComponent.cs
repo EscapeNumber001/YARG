@@ -33,6 +33,10 @@ namespace YARG.Pools {
 		[SerializeField]
 		private LineRenderer lineRenderer;
 
+		private const float DEFAULT_WIDTH = 1.0f;
+
+		private float sustainAnimationCounter = 0.0f;
+
 		private Color _colorCacheSustains = Color.white;
 		private Color ColorCacheSustains {
 			get {
@@ -68,6 +72,8 @@ namespace YARG.Pools {
 			if (pool != null) {
 				pool.player.track.StarpowerMissEvent += UpdateColor;
 			}
+			lineRenderer.widthMultiplier = 1.0f;
+			sustainAnimationCounter = 0.0f;
 		}
 
 		private void OnDisable() {
@@ -180,6 +186,11 @@ namespace YARG.Pools {
 			transform.localPosition -= new Vector3(0f, 0f, Time.deltaTime * pool.player.trackSpeed);
 
 			if (state == State.HITTING) {
+				sustainAnimationCounter++;
+				float width = 0f;
+				width += Mathf.Sin(sustainAnimationCounter * 0.5f) * 0.25f;
+				lineRenderer.widthMultiplier += width;
+
 				// Get the new line start position. Said position should be at
 				// the fret board and relative to the note itelf.
 				float newStart = -transform.localPosition.z - AbstractTrack.TRACK_END_OFFSET;

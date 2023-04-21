@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolId: note
   pool: {fileID: 0}
+  sustainVertexCount: 10
   meshRenderers:
   - {fileID: 4571971630462908758}
   - {fileID: 6846950644507852135}
