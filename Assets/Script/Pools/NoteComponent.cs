@@ -50,6 +50,12 @@ namespace YARG.Pools {
 			set => _colorCacheSustains = value;
 		}
 
+		public bool IsSustainHeld {
+			get {
+				return (state == State.HITTING && lineRenderer.enabled);
+			}
+		}
+
 		//Color cache for notes and sustains are now separate to allow for more customization. -Mia
 		private Color _colorCacheNotes = Color.white;
 		private Color ColorCacheNotes {

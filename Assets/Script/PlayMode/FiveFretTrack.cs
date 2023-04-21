@@ -30,6 +30,11 @@ namespace YARG.PlayMode {
 		private bool latestInputIsStrum = false;
 		private bool[] extendedSustain = new bool[] {false,false,false,false,false};
 
+		/// <summary>
+		/// How much charge is gained per second by whammying SP sustains.
+		/// </summary>
+		private const float WHAMMY_SP_CHARGE_RATE = 0.04f;
+
 		private int notesHit = 0;
 		// private int notesMissed = 0;
 
@@ -109,6 +114,11 @@ namespace YARG.PlayMode {
 				}
 
 				eventChartIndex++;
+			}
+
+			// starpower
+			if (StarpowerSection?.EndTime > RelativeTime && heldNotes.Count > 0) {
+				starpowerCharge += Time.deltaTime * WHAMMY_SP_CHARGE_RATE;
 			}
 
 			// Since chart is sorted, this is guaranteed to work
