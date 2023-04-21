@@ -185,10 +185,12 @@ namespace YARG.Pools {
 		private void Update() {
 			transform.localPosition -= new Vector3(0f, 0f, Time.deltaTime * pool.player.trackSpeed);
 
+			// TODO: Fix lighting distortion
 			if (state == State.HITTING) {
 				sustainAnimationCounter++;
 				float width = 0f;
 				width += Mathf.Sin(sustainAnimationCounter * 0.5f) * 0.25f;
+				
 				lineRenderer.widthMultiplier += width;
 
 				// Get the new line start position. Said position should be at
