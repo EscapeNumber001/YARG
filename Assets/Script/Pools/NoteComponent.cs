@@ -191,12 +191,12 @@ namespace YARG.Pools {
 		private void Update() {
 			transform.localPosition -= new Vector3(0f, 0f, Time.deltaTime * pool.player.trackSpeed);
 
-			// TODO: Fix lighting distortion
+			// TODO: Tweening between thicknesses - whammying too quickly currently looks a bit jarring
 			if (state == State.HITTING) {
 				if (pool.player.track is FiveFretTrack track) {
 					sustainAnimationCounter++;
 
-					lineRenderer.widthMultiplier = Mathf.Min(0.25f, track.GetWhammy() * 1.25f);
+					lineRenderer.widthMultiplier = Mathf.Max(1f, Mathf.Abs(track.GetWhammy() * 1.75f));
 				}
 
 				// Get the new line start position. Said position should be at

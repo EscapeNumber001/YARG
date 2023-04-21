@@ -116,8 +116,14 @@ namespace YARG.PlayMode {
 				eventChartIndex++;
 			}
 
-			if (StarpowerSection?.EndTime > RelativeTime && heldNotes.Count > 0) {
+			// BUG: Last sustain in SP phrase cannot be whammied
+			if (StarpowerSection?.EndTime > RelativeTime
+				&& heldNotes.Count > 0
+				&& GetWhammy() > 0f
+				) {
 				starpowerCharge += Time.deltaTime * WHAMMY_SP_CHARGE_RATE * Play.speed;
+			} else {
+				Debug.Log(GetWhammy());
 			}
 
 			// Since chart is sorted, this is guaranteed to work
