@@ -33,7 +33,7 @@ namespace YARG.PlayMode {
 		/// <summary>
 		/// How much charge is gained per second by whammying SP sustains.
 		/// </summary>
-		private const float WHAMMY_SP_CHARGE_RATE = 0.04f;
+		private const float WHAMMY_SP_CHARGE_RATE = 0.16f;
 
 		private int notesHit = 0;
 		// private int notesMissed = 0;
@@ -116,9 +116,8 @@ namespace YARG.PlayMode {
 				eventChartIndex++;
 			}
 
-			// starpower
 			if (StarpowerSection?.EndTime > RelativeTime && heldNotes.Count > 0) {
-				starpowerCharge += Time.deltaTime * WHAMMY_SP_CHARGE_RATE;
+				starpowerCharge += Time.deltaTime * WHAMMY_SP_CHARGE_RATE * Play.speed;
 			}
 
 			// Since chart is sorted, this is guaranteed to work
@@ -181,6 +180,10 @@ namespace YARG.PlayMode {
 			}
 
 			Play.Instance.ReverbAudio("song", on);
+		}
+
+		public float GetWhammy() {
+			return input.WhammyAmount;
 		}
 
 		private void UpdateInput() {

@@ -12,11 +12,18 @@ namespace YARG.Input {
 			"strumUp",
 			"strumDown",
 			"starpower",
-			"pause"
+			"pause",
+			"whammy"
 		};
 
 		public delegate void FretChangeAction(bool pressed, int fret);
 		public delegate void StrumAction();
+
+		public float WhammyAmount {
+			get {
+				return GetMappingAxisMagnitude("whammy"); 
+			}
+		}
 
 		public event FretChangeAction FretChangeEvent;
 		public event StrumAction StrumEvent;

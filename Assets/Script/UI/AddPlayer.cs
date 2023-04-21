@@ -64,6 +64,23 @@ namespace YARG.UI {
 			currentBindUpdate = null;
 		}
 
+		private void BindButton(ButtonControl button) {
+			Bind(button);
+		}
+
+		private void BindAxis(AxisControl axis) {
+			Bind(axis);
+		}
+
+		private void Bind(InputControl control) {
+			// Set mapping and stop waiting
+			inputStrategy.SetMappingInputControl(currentBindUpdate, control);
+			currentBindUpdate = null;
+
+			// Refresh
+			UpdateBind();
+		}
+
 		private void Update() {
 			if (state == State.BIND && currentBindUpdate != null) {
 
@@ -81,21 +98,19 @@ namespace YARG.UI {
 							continue;
 						}
 
-						if (control is not ButtonControl buttonControl) {
-							continue;
+						if (control is ButtonControl buttonControl && buttonControl.wasPressedThisFrame) {
+							BindButton(buttonControl);
+							break;
 						}
 
-						if (!buttonControl.wasPressedThisFrame) {
-							continue;
+						if (control is AxisControl axis
+								&& control is not ButtonControl
+								&& Mathf.Abs(axis.magnitude) >= 0.75f
+								&& axis.magnitude != -1f) {
+							Debug.Log(axis.magnitude);
+							BindAxis(axis);
+							break;
 						}
-
-						// Set mapping and stop waiting
-						inputStrategy.SetMappingInputControl(currentBindUpdate, control);
-						currentBindUpdate = null;
-
-						// Refresh
-						UpdateBind();
-						break;
 					}
 				}
 			}

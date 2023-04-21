@@ -193,11 +193,11 @@ namespace YARG.Pools {
 
 			// TODO: Fix lighting distortion
 			if (state == State.HITTING) {
-				sustainAnimationCounter++;
-				float width = 0f;
-				width += Mathf.Sin(sustainAnimationCounter * 0.5f) * 0.25f;
-				
-				lineRenderer.widthMultiplier += width;
+				if (pool.player.track is FiveFretTrack track) {
+					sustainAnimationCounter++;
+
+					lineRenderer.widthMultiplier = Mathf.Min(0.25f, track.GetWhammy() * 1.25f);
+				}
 
 				// Get the new line start position. Said position should be at
 				// the fret board and relative to the note itelf.

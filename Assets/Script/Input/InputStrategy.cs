@@ -205,6 +205,14 @@ namespace YARG.Input {
 			return false;
 		}
 
+		protected float GetMappingAxisMagnitude(string key) {
+			var mapping = inputMappings[key];
+			if (mapping is AxisControl axis) {
+				return axis.magnitude;
+			}
+			return -1.0f;
+		}
+
 		protected bool WasMappingReleased(string key) {
 			var mapping = inputMappings[key];
 
